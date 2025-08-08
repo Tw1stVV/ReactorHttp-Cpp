@@ -1,8 +1,9 @@
 ﻿#pragma once
 #include <stdbool.h>
+#include <functional>
 
 //函数指针
-using handleFunc = int(*)(void* arg);
+//using handleFunc = int(*)(void* arg);
 
 //fd读写事件
 enum class FDevent
@@ -15,15 +16,21 @@ enum class FDevent
 class Channel
 {
 public:
-	Channel(int fd, int events, handleFunc readFunc, handleFunc write, handleFunc destroy, void* arg);
+	using handleFunc = std::function<void(void*)>;
+	Channel(int fd, FDevent events, void* arg,  handleFunc readFunc, handleFunc writeFunc, handleFunc destroyFunc);
 	void setWriteEventEnable(bool flag);
 	bool isWriteEventEnable();
 	//事件回调函数
 	handleFunc readCallback;
 	handleFunc writeCallback;
 	handleFunc destroyCallback;
+
+	inline int getSocket();
+	inline int getEvents();
+	inline void* getArg();
+
 private:
-	int fd;		//通信文件描述符
-	int events;	//事件
-	void* arg;	//回调函数参数
+	int m_socket;		//通信文件描述符
+	int m_events;	//事件
+	void* m_arg;	//回调函数参数
 };

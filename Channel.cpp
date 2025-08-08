@@ -1,25 +1,39 @@
 ﻿#include "Channel.h"
 
-Channel::Channel(int fd, int events, handleFunc readFunc, handleFunc writeFunc, handleFunc destroyFunc, void* arg)
-	:fd(fd), events(events), 
-	readCallback(readFunc), writeCallback(writeFunc), destroyCallback(destroyFunc), arg(arg)
+Channel::Channel(int fd, FDevent events, void* arg, handleFunc readFunc, handleFunc writeFunc, handleFunc destroyFunc)
+    :m_socket(fd), m_events((int)events), m_arg(arg),
+    readCallback(readFunc), writeCallback(writeFunc), destroyCallback(destroyFunc)
 {
-
 }
 
 void Channel::setWriteEventEnable(bool flag)
 {
     if (flag)
     {
-        this->events |= static_cast<int>(FDevent::WriteEvent);
+        this->m_events |= static_cast<int>(FDevent::WriteEvent);
     }
     else
     {
-        this->events &= static_cast<int>(FDevent::WriteEvent);
+        this->m_events &= static_cast<int>(FDevent::WriteEvent);
     }
 }
 
 bool Channel::isWriteEventEnable()
 {
-    return this->events & FDevent::WriteEvent;
+    return this->m_events & static_cast<int>(FDevent::WriteEvent);
+}
+
+inline int Channel::getSocket()
+{
+    return m_socket;
+}
+
+inline int Channel::getEvents()
+{
+    return static_cast<int>(m_events);
+}
+
+inline void* Channel::getArg()
+{
+    return m_arg;
 }
