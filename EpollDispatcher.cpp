@@ -1,4 +1,5 @@
 ﻿#include "EpollDispatcher.h"
+#include "EventLoop.h"
 #include <sys/epoll.h>
 #include <stdio.h>
 #include <cstdlib>
@@ -44,7 +45,6 @@ int EpollDispatcher::remove()
     }
     // 通过 channel 释放对应的 TcpConnection 资源
     m_channel->destroyCallback(m_channel->getArg());
-
     return ret;
 }
 
@@ -68,17 +68,15 @@ int EpollDispatcher::dispatch(int timeout)
         int fd = m_events[i].data.fd;
         if (events & EPOLLERR || events & EPOLLHUP)
         {
-            // 对方断开了连接, 删除 fd
-            // epollRemove(Channel, evLoop);
             continue;
         }
         if (events & EPOLLIN)
         {
-            //eventActivate(evLoop, fd, ReadEvent);
+            m_evLoop->active(fd, (int)FDevent::ReadEvent);
         }
         if (events & EPOLLOUT)
         {
-            //eventActivate(evLoop, fd, WriteEvent);
+            m_evLoop->active(fd, (int)FDevent::WriteEvent);
         }
     }
     return 0;

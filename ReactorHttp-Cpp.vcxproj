@@ -75,18 +75,31 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="EpollDispatcher.cpp" />
     <ClCompile Include="EventLoop.cpp" />
+    <ClCompile Include="HttpRequest.cpp" />
+    <ClCompile Include="HttpResponse.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TcpConnection.cpp" />
+    <ClCompile Include="TcpServer.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
     <ClCompile Include="WorkerThread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="EpollDispatcher.h" />
     <ClInclude Include="EventLoop.h" />
+    <ClInclude Include="HttpRequest.h" />
+    <ClInclude Include="HttpResponse.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="TcpConnection.h" />
+    <ClInclude Include="TcpServer.h" />
+    <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="WorkerThread.h" />
   </ItemGroup>
   <ItemDefinitionGroup />

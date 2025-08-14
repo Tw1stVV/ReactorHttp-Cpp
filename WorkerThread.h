@@ -11,6 +11,10 @@ public:
     WorkerThread(int index);
     ~WorkerThread();
     void run();
+    inline EventLoop* getEventLoop()
+    {
+        return m_evLoop;
+    }
 
 private:
     void running();
@@ -20,6 +24,6 @@ private:
     std::string m_name;
     std::mutex m_mutex;  // 互斥锁
     std::condition_variable m_cond;    // 条件变量
-    EventLoop* evLoop;   // 反应堆模型
+    EventLoop* m_evLoop;   // 反应堆模型
 };
 

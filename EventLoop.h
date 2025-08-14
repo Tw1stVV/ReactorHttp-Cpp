@@ -30,6 +30,9 @@ public:
 	int addTask(Channel* channel, ElemType type);	//添加任务
 	int processTask();	//处理任务队列任务
 	int freeChannel(Channel* channel);	//释放Channel
+	std::thread::id getThreadID();
+	std::string getThreadName();
+	std::string getThreadID_s();
 
 private:
 	void readLocalMessage();

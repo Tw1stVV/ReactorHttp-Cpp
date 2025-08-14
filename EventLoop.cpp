@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <string.h>
+#include <string>
+#include <sstream>
 
 EventLoop::EventLoop()
 	:EventLoop(std::string())
@@ -142,6 +144,23 @@ int EventLoop::freeChannel(Channel* channel)
 	// 释放 channel
 	delete channel;
 	return 0;
+}
+
+std::thread::id EventLoop::getThreadID()
+{
+	return m_threadID;
+}
+
+std::string EventLoop::getThreadName()
+{
+	return m_threadName;
+}
+
+std::string EventLoop::getThreadID_s()
+{
+	std::stringstream ss;
+	ss << m_threadID;
+	return ss.str();
 }
 
 void EventLoop::readLocalMessage()

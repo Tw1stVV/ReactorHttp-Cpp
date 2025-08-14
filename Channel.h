@@ -17,7 +17,7 @@ class Channel
 {
 public:
 	using handleFunc = std::function<void(void*)>;
-	Channel(int fd, FDevent events, void* arg,  handleFunc readFunc, handleFunc writeFunc, handleFunc destroyFunc);
+	Channel(int fd, FDevent events, void* arg, handleFunc readFunc, handleFunc writeFunc, handleFunc destroyFunc);
 	void setWriteEventEnable(bool flag);
 	bool isWriteEventEnable();
 	//事件回调函数
@@ -25,9 +25,19 @@ public:
 	handleFunc writeCallback;
 	handleFunc destroyCallback;
 
-	inline int getSocket();
-	inline int getEvents();
-	inline void* getArg();
+	inline int getSocket()
+	{
+		return m_socket;
+	}
+
+	inline int getEvents()
+	{
+		return m_events;
+	}
+	inline void* getArg()
+	{
+		return m_arg;
+	}
 
 private:
 	int m_socket;		//通信文件描述符
